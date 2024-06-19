@@ -18,7 +18,7 @@ const DepositMp = () => {
     try {
       const response = await axios.post(`https://mp-crypto-server.onrender.com/createorder`, {
         description: "Ceibo Wallet deposit",
-        price: total,
+        price: parseFloat(total),
         quantity: 1,
         currency_id: "ARS"
       });

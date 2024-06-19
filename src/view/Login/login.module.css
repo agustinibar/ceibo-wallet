@@ -1,0 +1,7 @@
+.containerLogin{
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    margin: 0 auto;
+    gap: 4px;
+}

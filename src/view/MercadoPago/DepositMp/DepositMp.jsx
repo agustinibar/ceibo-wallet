@@ -1,43 +1,38 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styles from './depositmp.module.css';
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 import axios from 'axios';
 
 const DepositMp = () => {
   const publicKey = 'APP_USR-7c5a86ed-549b-4977-a7c6-9cd503b22def';
-  const [total, setTotal] = useState('');
+  initMercadoPago(publicKey);
+  const [total, setTotal] = useState(0);
   const [preferenceId, setPreferenceId] = useState(null);
 
-  useEffect(() => {
-    if (publicKey) {
-      initMercadoPago(publicKey);
-    }
-  }, [publicKey]);
-
+  
   const createPreference = async () => {
     try {
       const response = await axios.post(`https://mp-crypto-server.onrender.com/createorder`, {
         description: "Ceibo Wallet deposit",
-        price: parseFloat(total),
-        quantity: 1,
+        price: Number(total),
         currency_id: "ARS"
       });
-
       const { id } = response.data;
+      console.log(id)
       return id;
     } catch (error) {
       alert("Algo salió mal con Mercado Pago, por favor, escríbenos por Whatsapp: +54 3487 522074");
       console.log(error);
     }
   };
-
+  
   const handleMercadoPago = async () => {
     const id = await createPreference();
     if (id) {
       setPreferenceId(id);
     }
   };
-
+  
   const handleTotal = (event) => {
     setTotal(event.target.value);
   };
@@ -48,7 +43,7 @@ const DepositMp = () => {
         <h2>Deposita fondos con tu cuenta de Mercado Pago</h2>
         <h4>¿Cuánto deseas cargar a tu cuenta?</h4>
         <input
-          type="number"
+          type="text"
           placeholder="$"
           value={total}
           onChange={handleTotal}

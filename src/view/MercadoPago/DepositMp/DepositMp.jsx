@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styles from './depositmp.module.css';
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 import axios from 'axios';
+import { auth } from '../../../firebase/config';
 
 const DepositMp = () => {
   const publicKey = 'APP_USR-7c5a86ed-549b-4977-a7c6-9cd503b22def';
@@ -15,7 +16,9 @@ const DepositMp = () => {
       const response = await axios.post(`https://mp-crypto-server.onrender.com/createorder`, {
         description: "Ceibo Wallet deposit",
         price: Number(total),
-        currency_id: "ARS"
+        quantity: 1,
+        currency_id: "ARS",
+        user_id: auth.currentUser.uid
       });
       const { id } = response.data;
       console.log(id)

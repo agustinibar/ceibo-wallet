@@ -27,14 +27,14 @@ const Wallet = () => {
             }
           } else {
             // Si no existe el documento del usuario, redirigir a login
-            navigate('/login');
+            navigate('/');
           }
         } else {
-          navigate('/login');
+          navigate('/');
         }
       } catch (error) {
         console.error("Error fetching user data: ", error);
-        navigate('/login');
+        navigate('/');
       }
     };
 

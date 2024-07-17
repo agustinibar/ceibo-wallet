@@ -48,14 +48,15 @@ const Wallet = () => {
         const usdSymbol = "tether"
         const response = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd`);
         const response1 = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd`);
-        // const response2 = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd`);
+        const response2 = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=ars`);
       
         const btcPrice = response.data[btcSymbol].usd;
         const ethPrice = response1.data[ethSymbol].usd;
-        // const tetherPrice = response2.data[usdSymbol].usd;
+        const tether = response2.data[usdSymbol].ars;
         setBtcPrice(btcPrice);
         setEthPrice(ethPrice);
         setTetherPrice(tetherPrice);
+        console.log(tether);
 
       } catch (error) {
         console.error("Error al obtener el precio de la criptomoneda: ", error);
@@ -64,7 +65,7 @@ const Wallet = () => {
     };
     obtenerPrecioCriptomonedas();
     fetchUser();
-  }, [navigate]); // Añadir navigate como dependencia
+  }, [navigate]);
 
   if (!user) {
     return <div>Loading...</div>;
